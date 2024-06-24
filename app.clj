@@ -1,9 +1,9 @@
-;; app.clj
 (ns app
   (:require [db]
-            [menu]))
+            [menu])
+  (:gen-class))
 
-;; Load the city data and start the main menu.
-(def cities-db (db/load-data "cities.txt"))
-
-(menu/main-menu cities-db)
+(defn -main [& args]
+  ;; Load the city data and start the main menu.
+  (let [cities-db (db/load-data "cities.txt")]
+    (menu/main-menu cities-db)))
