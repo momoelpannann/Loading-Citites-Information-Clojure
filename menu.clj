@@ -33,19 +33,19 @@
   (flush)
   (let [sub-option (read-line)]
     (cond
-      (= sub-option "1") (doseq [city (db/get-cities db/cities-db)]
+      (= sub-option "1") (doseq [city (db/get-cities cities-db)]
                            (println (:name city)))
       (= sub-option "2") (do
                            (print "Enter province name: ")
                            (flush)
                            (let [province (read-line)]
-                             (doseq [city (db/get-cities-by-province db/cities-db province)]
+                             (doseq [city (db/get-cities-by-province cities-db province)]
                                (println (str (:name city) " " (:size city) " " (:population city))))))
       (= sub-option "3") (do
                            (print "Enter province name: ")
                            (flush)
                            (let [province (read-line)]
-                             (doseq [city (db/get-cities-by-density db/cities-db province)]
+                             (doseq [city (db/get-cities-by-density cities-db province)]
                                (println (str (:name city) " " (:size city) " " (double (/ (:population city) (:area city))))))))
       (= sub-option "4") (println "Returning to main menu")
       :else (println "Invalid option"))))
