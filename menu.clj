@@ -85,11 +85,12 @@
 
 (defn menu [cities-db]
   ;; Main menu loop for user interaction.
+  (loop[]
   (let [option (str/trim (showMenu))]
     (if (= option "5")
       (println "\nGood Bye\n")
       (do 
         (processOption option cities-db)
-        (recur)))))
+        (recur))))))
 
 (main-menu db/cities-db) 
