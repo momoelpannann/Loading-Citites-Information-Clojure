@@ -1,15 +1,15 @@
-;; menu.clj
-;; This file contains functions for displaying the main menu and handling user interaction.
+;; Mohamed Elpannann 40251343
+;; Assignment 3 348 Summer 2024 
+;; This file contains  functions for displaying the main menu and handling user interaction.
 ;; It provides various options to list cities, display city information, list provinces, 
 ;; and display province information. The `main-menu` function drives the menu loop, 
 ;; repeatedly prompting the user for input and processing the selected option.
-
 (ns menu
   (:require [clojure.string :as str]
             [db]))
 
-;; Function to display the main menu and prompt the user for an option.
 (defn showMenu []
+  ;; Display the main menu and prompt the user for an option.
   (println "\n\n*** City Information Menu ***")
   (println "-----------------------------\n")
   (println "1. List cities")
@@ -22,8 +22,8 @@
     (flush) 
     (read-line)))
 
-;; Function to handle the submenu for listing cities.
-(defn option1 [cities-db]
+(defn option1 []
+  ;; Submenu for listing cities
   (println "*** List Cities Submenu ***")
   (println "1. List all cities")
   (println "2. List all cities for a given province, ordered by size and name")
@@ -50,8 +50,8 @@
       (= sub-option "4") (println "Returning to main menu")
       :else (println "Invalid option"))))
 
-;; Function to display information for a specific city.
-(defn option2 [cities-db]
+(defn option2 []
+  ;; Display information for a specific city.
   (print "\nPlease enter the city name => ") 
   (flush)
   (let [city-name (read-line)]
@@ -59,8 +59,8 @@
       (println city)
       (println "City not found."))))
 
-;; Function to list all provinces with the total number of cities.
-(defn option3 [cities-db]
+(defn option3 []
+  ;; List all provinces with the total number of cities.
   (println "List all provinces with total number of cities")
   (doseq [[province count] (db/get-provinces cities-db)]
     (println (str province " " count)))
@@ -68,27 +68,28 @@
         total-provinces (count (db/get-provinces cities-db))]
     (println (str "Total: " total-provinces " provinces, " total-cities " cities on file."))))
 
-;; Function to list all provinces with the total population.
-(defn option4 [cities-db]
+(defn option4 []
+  ;; List all provinces with the total population.
   (println "List all provinces with total population")
   (doseq [[province population] (db/get-provinces-population cities-db)]
     (println (str province " " population))))
 
-;; Function to process the selected option from the main menu.
-(defn processOption [option cities-db]
+(defn processOption [option]
+  ;; Call the relevant function based on the user's menu selection.
   (cond
-    (= option "1") (option1 cities-db)
-    (= option "2") (option2 cities-db)
-    (= option "3") (option3 cities-db)
-    (= option "4") (option4 cities-db)
+    (= option "1") (option1)
+    (= option "2") (option2)
+    (= option "3") (option3)
+    (= option "4") (option4)
     :else (println "Invalid Option, please try again")))
 
-;; Function to drive the main menu loop, repeatedly prompting the user for input and processing the selected option.
-(defn main-menu [cities-db]
-  (loop []
-    (let [option (str/trim (showMenu))]
-      (if (= option "5")
-        (println "\nGood Bye\n")
-        (do 
-          (processOption option cities-db)
-          (recur))))))
+(defn menu []
+  ;; Main menu loop for user interaction.
+  (let [option (str/trim (showMenu))]
+    (if (= option "5")
+      (println "\nGood Bye\n")
+      (do 
+        (processOption option)
+        (recur)))))
+
+(menu)
