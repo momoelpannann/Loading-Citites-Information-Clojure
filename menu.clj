@@ -22,7 +22,7 @@
     (flush) 
     (read-line)))
 
-(defn option1 []
+(defn option1 [cities-db]
   ;; Submenu for listing cities
   (println "*** List Cities Submenu ***")
   (println "1. List all cities")
@@ -50,7 +50,7 @@
       (= sub-option "4") (println "Returning to main menu")
       :else (println "Invalid option"))))
 
-(defn option2 []
+(defn option2 [cities-db]
   ;; Display information for a specific city.
   (print "\nPlease enter the city name => ") 
   (flush)
@@ -59,7 +59,7 @@
       (println city)
       (println "City not found."))))
 
-(defn option3 []
+(defn option3 [cities-db]
   ;; List all provinces with the total number of cities.
   (println "List all provinces with total number of cities")
   (doseq [[province count] (db/get-provinces cities-db)]
@@ -68,13 +68,13 @@
         total-provinces (count (db/get-provinces cities-db))]
     (println (str "Total: " total-provinces " provinces, " total-cities " cities on file."))))
 
-(defn option4 []
+(defn option4 [cities-db]
   ;; List all provinces with the total population.
   (println "List all provinces with total population")
   (doseq [[province population] (db/get-provinces-population cities-db)]
     (println (str province " " population))))
 
-(defn processOption [option]
+(defn processOption [option cities-db]
   ;; Call the relevant function based on the user's menu selection.
   (cond
     (= option "1") (option1)
@@ -83,13 +83,13 @@
     (= option "4") (option4)
     :else (println "Invalid Option, please try again")))
 
-(defn menu []
+(defn menu [cities-db]
   ;; Main menu loop for user interaction.
   (let [option (str/trim (showMenu))]
     (if (= option "5")
       (println "\nGood Bye\n")
       (do 
-        (processOption option)
+        (processOption option cities-db)
         (recur)))))
 
-(menu)
+(main-menu db/cities-db) 
