@@ -77,10 +77,10 @@
 (defn processOption [option cities-db]
   ;; Call the relevant function based on the user's menu selection.
   (cond
-    (= option "1") (option1)
-    (= option "2") (option2)
-    (= option "3") (option3)
-    (= option "4") (option4)
+    (= option "1") (option1 cities-db)
+    (= option "2") (option2 cities-db)
+    (= option "3") (option3 cities-db)
+    (= option "4") (option4 cities-db)
     :else (println "Invalid Option, please try again")))
 
 (defn main-menu [cities-db]
