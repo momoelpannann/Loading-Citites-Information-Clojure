@@ -93,4 +93,4 @@
         (processOption option cities-db)
         (recur))))))
 
-(main-menu db/cities-db) 
+(main-menu cities-db) 
